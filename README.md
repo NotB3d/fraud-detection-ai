@@ -71,6 +71,6 @@ The interactive app allows:
 
 ### ▶️ Run the app locally:
 git clone TU_REPO
-cd fraud-detection-ai,
-pip install -r requirements.txt,
+cd fraud-detection-ai |
+pip install -r requirements.txt |
 streamlit run src/app.py
