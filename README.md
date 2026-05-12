@@ -70,7 +70,7 @@ The interactive app allows:
 - Comparing predictions with actual labels
 
 ### ▶️ Run the app locally:
-git clone TU_REPO
+git clone https://github.com/NotB3d/fraud-detection-ai.git
 cd fraud-detection-ai |
 pip install -r requirements.txt |
-streamlit run src/app.py
+streamlit run src/app.py 
