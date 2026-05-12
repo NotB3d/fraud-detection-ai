@@ -24,9 +24,6 @@ build/
 # Data files (large)
 creditcard.csv
 
-# Model files (large - can be regenerated)
-models/*.pkl
-
 # OS
 .DS_Store
 Thumbs.db
