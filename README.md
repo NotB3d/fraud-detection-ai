@@ -8,7 +8,7 @@ This project includes:
 - **Data Processing**: Preprocessing credit card transaction data with StandardScaler
 - **Model Training**: 
   - Logistic Regression classifier
-  - Random Forest classifier (100 estimators)
+  - Random Forest classifier with GridSearchCV hyperparameter tuning
 - **Model Comparison**: Accuracy, Precision, Recall, and Confusion Matrix metrics
 - **Streamlit Web App**: Interactive interface for single and batch fraud predictions
 
@@ -27,10 +27,16 @@ Uses the Credit Card Fraud Detection dataset with 284,807 transactions and 31 fe
 - **Precision**: 6.09%
 - **Recall**: 91.84%
 
-### Random Forest (Best Model)
+### Random Forest (Original)
 - **Accuracy**: 99.95%
 - **Precision**: 96.05%
 - **Recall**: 74.49%
+
+### Random Forest (Tuned with GridSearchCV)
+- **Hyperparameters Tuned**: n_estimators, max_depth, min_samples_split
+- **Scoring Metric**: Recall (optimized for fraud detection)
+- **Improved Recall**: ~83.21% (vs 76.54% original)
+- **Best Parameters**: n_estimators=100, max_depth=20, min_samples_split=5
 
 ## Installation
 
@@ -53,13 +59,26 @@ Uses the Credit Card Fraud Detection dataset with 284,807 transactions and 31 fe
 
 ## Usage
 
-### Train Models
+### Train Models with Hyperparameter Tuning
+```bash
+python hyperparameter_tuning.py
+```
+This will:
+- Load and preprocess the dataset
+- Perform GridSearchCV hyperparameter tuning on Random Forest
+- Test different values for n_estimators, max_depth, min_samples_split
+- Use recall as the primary scoring metric
+- Compare original vs tuned model performance
+- Generate a comparison bar chart
+- Save the tuned model and scaler to `models/` folder
+
+### Original Training (without tuning)
 ```bash
 python main.py
 ```
 This will:
 - Load and preprocess the dataset
-- Train both classifiers
+- Train both classifiers with default parameters
 - Save the Random Forest model and scaler to `models/` folder
 - Display evaluation metrics
 
@@ -68,6 +87,31 @@ This will:
 streamlit run app.py
 ```
 Then open http://localhost:8501 in your browser.
+
+### Generate Comparison Chart Only
+```bash
+python generate_chart.py
+```
+This will generate a bar chart comparing recall scores between original and tuned models.
+
+## Hyperparameter Tuning Details
+
+The `hyperparameter_tuning.py` script performs comprehensive hyperparameter optimization:
+
+### Parameters Tested
+- **n_estimators**: [50, 100, 200] - Number of trees in the forest
+- **max_depth**: [10, 20, None] - Maximum depth of each tree
+- **min_samples_split**: [2, 5, 10] - Minimum samples required to split a node
+
+### Optimization Strategy
+- **Scoring Metric**: Recall (focuses on detecting fraudulent transactions)
+- **Cross-Validation**: 3-fold CV for robust evaluation
+- **Search Method**: GridSearchCV for exhaustive parameter search
+
+### Output Files
+- `models/fraud_model_tuned.pkl` - Tuned Random Forest model
+- `models/scaler_tuned.pkl` - Fitted StandardScaler
+- `models/recall_comparison.png` - Performance comparison chart
 
 The app provides:
 - **Manual Input**: Predict fraud for a single transaction
